@@ -1,12 +1,14 @@
 all:
 	sh ./srcs/requirements/tools/setup.sh
-	docker compose -f ./srcs/docker-compose.yml up
+	docker compose -f  ./srcs/docker-compose.yml  up
+
+stop:
+	docker compose -f  ./srcs/docker-compose.yml stop
 
 down:
 	docker compose -f ./srcs/docker-compose.yml down
 
-down-v:
-	docker compose -f ./srcs/docker-compose.yml down --volumes
-
 clean:
-	
+	docker compose -f ./srcs/docker-compose.yml down --volumes
+	docker rmi $$(docker images -q)
+

@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mariadb:
-    build: mariadb/
+    build: requirements/mariadb/
     container_name: mariadbc
     ports:
       - "3306:3306"
@@ -14,7 +14,7 @@ services:
       - mysql_vol:/var/lib/mysql
 
   wordpress:
-    build: wordpress/
+    build: requirements/wordpress/
     depends_on:
       - mariadb
     container_name: wordpressc
@@ -26,7 +26,7 @@ services:
       - wordpress_vol:/var/www/html/wordpress
 
   nginx:
-    build: nginx/
+    build: requirements/nginx/
     depends_on:
       - wordpress
     container_name: nginxc
@@ -47,7 +47,7 @@ volumes:
     driver_opts:
       type: none
       device:
-        ~/data/mysql_db
+        ${HOME}/data/mysql_db
       o: "bind"
 
   wordpress_vol:
@@ -55,7 +55,7 @@ volumes:
     driver_opts:
       type: none
       device:
-        ~/data/wordpress_path
+        ${HOME}/data/wordpress_path
       o: "bind"
 
 

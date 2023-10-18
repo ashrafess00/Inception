@@ -16,6 +16,9 @@ wp config create \
 # change file permission for wp-config.php
 chmod 600 /var/www/html/wordpress/wp-config.php
 
+#install the them
+wp theme install twentytwentytwo --allow-root
+
 # Configure wp-config.php add admin
 wp core install \
 --url=aessaoud.42.fr \

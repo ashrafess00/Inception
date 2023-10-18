@@ -4,7 +4,6 @@ mkdir -p /run/mysqld
 
 cat << EOF > init.sql
 FLUSH PRIVILEGES;
--- this change the root password
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 
 
@@ -16,7 +15,7 @@ DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.
 
 FLUSH PRIVILEGES;
 CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';
-GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%';
+GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 
 
 CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};
