@@ -10,14 +10,11 @@ wp config create \
 --dbname=${MYSQL_DB} \
 --dbuser=${MYSQL_USER} \
 --dbpass=${MYSQL_PASSWORD} \
---dbhost=mariadbc:3306 \
+--dbhost=mariadb:3306 \
 --allow-root
 
 # change file permission for wp-config.php
 chmod 600 /var/www/html/wordpress/wp-config.php
-
-#install the them
-wp theme install twentytwentytwo --allow-root
 
 # Configure wp-config.php add admin
 wp core install \
@@ -29,6 +26,15 @@ wp core install \
 --allow-root
 chown -R www-data:www-data /var/www/html/
 chmod -R 755 /var/www/html/
+
+#create a user
+wp user create \
+${USER_NAME} \
+${USER_EMAIL} \
+--user_pass=${USER_PASSWORD} \
+--role=editor \
+--allow-root
+
 
 exec "$@"
 

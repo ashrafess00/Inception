@@ -1,62 +1,81 @@
 version: "3.8"
 
 services:
-  mariadb:
-    build: requirements/mariadb/
-    container_name: mariadbc
+  # mariadb:
+  #   build: requirements/mariadb/
+  #   container_name: mariadb
+  #   ports:
+  #     - "3306:3306"
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - mynet
+  #   volumes:
+  #     - mysql_vol:/var/lib/mysql
+  #   restart: always
+
+  # wordpress:
+  #   build: requirements/wordpress/
+  #   depends_on:
+  #     - mariadb
+  #   container_name: wordpress
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - mynet
+  #   volumes:
+  #     - wordpress_vol:/var/www/html/wordpress
+  #   restart: always
+    
+
+  # nginx:
+  #   build: requirements/nginx/
+  #   depends_on:
+  #     - wordpress
+  #   container_name: nginx
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - mynet
+  #   volumes:
+  #     - wordpress_vol:/var/www/html/wordpress
+  #   ports:
+  #     - "443:443"
+  #   restart: always
+  
+  ftp-server:
+    build: requirements/bonus/ftp-server/
+    container_name: ftp-server
+    env_file:
+      - .env
+    networks:
+      - mynet
     ports:
-      - "3306:3306"
-    env_file:
-      - .env
-    networks:
-      - mynet
-    volumes:
-      - mysql_vol:/var/lib/mysql
-
-  wordpress:
-    build: requirements/wordpress/
-    depends_on:
-      - mariadb
-    container_name: wordpressc
-    env_file:
-      - .env
-    networks:
-      - mynet
-    volumes:
-      - wordpress_vol:/var/www/html/wordpress
-
-  nginx:
-    build: requirements/nginx/
-    depends_on:
-      - wordpress
-    container_name: nginxc
-    env_file:
-      - .env
-    networks:
-      - mynet
-    volumes:
-      - wordpress_vol:/var/www/html/wordpress
-    ports:
-      - "443:443"
-      
+      - "20:20"
+      - "21:21"
 
 
-volumes:
-  mysql_vol:
-    driver: local
-    driver_opts:
-      type: none
-      device:
-        ${HOME}/data/mysql_db
-      o: "bind"
 
-  wordpress_vol:
-    driver: local
-    driver_opts:
-      type: none
-      device:
-        ${HOME}/data/wordpress_path
-      o: "bind"
+# 172.20.0.2
+  
+
+
+# volumes:
+#   mysql_vol:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device:
+#         ${HOME}/data/mysql_db
+#       o: "bind"
+
+#   wordpress_vol:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device:
+#         ${HOME}/data/wordpress_path
+#       o: "bind"
 
 
 networks:

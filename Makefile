@@ -1,14 +1,21 @@
-all:
-	sh ./srcs/requirements/tools/setup.sh
-	docker compose -f  ./srcs/docker-compose.yml  up
+DOCKER_COMPOSE_FILE=./srcs/docker-compose.yml
+SCRIPTS=./srcs/requirements/tools
 
-stop:
-	docker compose -f  ./srcs/docker-compose.yml stop
+all:
+	sh $(SCRIPTS)/setup.sh
+	docker compose -f $(DOCKER_COMPOSE_FILE) up
+
+up: all
 
 down:
-	docker compose -f ./srcs/docker-compose.yml down
-
-clean:
-	docker compose -f ./srcs/docker-compose.yml down --volumes
+	docker compose -f $(DOCKER_COMPOSE_FILE) down
+build:
+	docker compose -f $(DOCKER_COMPOSE_FILE) build
+restart:
+	docker compose -f $(DOCKER_COMPOSE_FILE) restart
+logs:
+	docker compose -f $(DOCKER_COMPOSE_FILE) logs
+fclean: down
+	sudo rm -rf ~/data
+	docker volume prune
 	docker rmi $$(docker images -q)
-
