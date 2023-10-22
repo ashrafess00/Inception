@@ -9,6 +9,10 @@ up: all
 
 down:
 	docker compose -f $(DOCKER_COMPOSE_FILE) down
+
+stop:
+	docker compose -f $(DOCKER_COMPOSE_FILE) stop
+
 build:
 	docker compose -f $(DOCKER_COMPOSE_FILE) build
 restart:

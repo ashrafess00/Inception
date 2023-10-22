@@ -1,17 +1,20 @@
 #!/bin/sh
 
 
-#create ftp_user
-useradd -m ${FTP_USER}
-
-#give it a password
+useradd $FTP_USER
 echo $FTP_USER:$FTP_PASSWORD | chpasswd
 
-mkdir /home/$FTP_USER/ftp
-chown nobody:nogroup /home/$FTP_USER/ftp
-chmod a-w /home/$FTP_USER/ftp
-mkdir /home/$FTP_USER/ftp/files
-chown $FTP_USER:$FTP_USER /home/$FTP_USER/ftp/files
+usermod -d /var/www/html/wordpress $FTP_USER
+
+mkdir -p /var/www/html/wordpress/ftp
+chown -R $FTP_USER:$FTP_USER /var/www/html/wordpress/ftp
+chmod -R 777 /var/www/html/wordpress/ftp
+
+
+echo "vsftpd test file" | tee /var/www/html/wordpress/ftp/ftp.txt
+
 echo $FTP_USER | tee -a /etc/vsftpd.userlist
 
-exec "$@"
+/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+
+

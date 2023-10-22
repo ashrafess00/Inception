@@ -24,8 +24,8 @@ wp core install \
 --admin_password=${ADMIN_PASSWORD} \
 --admin_email=${ADMIN_EMAIL} \
 --allow-root
-chown -R www-data:www-data /var/www/html/
-chmod -R 755 /var/www/html/
+chown -R www-data:www-data /var/www/html/wordpress
+chmod -R 757 /var/www/html/wordpress
 
 #create a user
 wp user create \

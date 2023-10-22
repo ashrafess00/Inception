@@ -1,58 +1,66 @@
 version: "3.8"
 
 services:
-  # mariadb:
-  #   build: requirements/mariadb/
-  #   container_name: mariadb
-  #   ports:
-  #     - "3306:3306"
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - mynet
-  #   volumes:
-  #     - mysql_vol:/var/lib/mysql
-  #   restart: always
-
-  # wordpress:
-  #   build: requirements/wordpress/
-  #   depends_on:
-  #     - mariadb
-  #   container_name: wordpress
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - mynet
-  #   volumes:
-  #     - wordpress_vol:/var/www/html/wordpress
-  #   restart: always
-    
-
-  # nginx:
-  #   build: requirements/nginx/
-  #   depends_on:
-  #     - wordpress
-  #   container_name: nginx
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - mynet
-  #   volumes:
-  #     - wordpress_vol:/var/www/html/wordpress
-  #   ports:
-  #     - "443:443"
-  #   restart: always
-  
-  ftp-server:
-    build: requirements/bonus/ftp-server/
-    container_name: ftp-server
+  mariadb:
+    build: requirements/mariadb/
+    container_name: mariadb
+    expose:
+      - "3306"
     env_file:
       - .env
     networks:
       - mynet
+    volumes:
+      - mysql_vol:/var/lib/mysql
+    restart: always
+
+  wordpress:
+    build: requirements/wordpress/
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    env_file:
+      - .env
+    networks:
+      - mynet
+    volumes:
+      - wordpress_vol:/var/www/html/wordpress
+    restart: always
+    expose:
+      - "9000"
+    
+
+  nginx:
+    build: requirements/nginx/
+    depends_on:
+      - wordpress
+    container_name: nginx
+    env_file:
+      - .env
+    networks:
+      - mynet
+    volumes:
+      - wordpress_vol:/var/www/html/wordpress
+    ports:
+      - "443:443"
+    restart: always
+
+  ftp-server:
+    build: requirements/bonus/ftp-server
+    container_name: ftp-server
+    env_file:
+      - .env
+    volumes:
+      - wordpress_vol:/var/www/html/wordpress
+    networks:
+      - mynet
     ports:
       - "20:20"
-      - "21:21"
+      # - "21:21"
+      - "21100-21110:21100-21110"
+    restart: always
+    depends_on:
+      - wordpress
 
 
 
@@ -60,22 +68,28 @@ services:
   
 
 
-# volumes:
-#   mysql_vol:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device:
-#         ${HOME}/data/mysql_db
-#       o: "bind"
+volumes:
+  test_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device:
+        ${HOME}/Desktop/inception/
+  mysql_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device:
+        ${HOME}/data/mysql_db
+      o: "bind"
 
-#   wordpress_vol:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device:
-#         ${HOME}/data/wordpress_path
-#       o: "bind"
+  wordpress_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device:
+        ${HOME}/data/wordpress_path
+      o: "bind"
 
 
 networks:

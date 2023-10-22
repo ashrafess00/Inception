@@ -6,12 +6,8 @@ RUN apt-get update && \
 RUN mkdir -p /var/run/vsftpd/empty
 
 
-COPY conf/init.sh /init.sh
 COPY conf/vsftpd.conf  /etc/vsftpd/vsftpd.conf 
+COPY conf/init.sh /init.sh
 
-
-EXPOSE 20 21
 
 ENTRYPOINT [ "sh", "init.sh" ]
-
-CMD ["vsftpd"]
