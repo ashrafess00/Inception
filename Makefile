@@ -21,5 +21,5 @@ logs:
 	docker compose -f $(DOCKER_COMPOSE_FILE) logs
 fclean: down
 	sudo rm -rf ~/data
-	docker volume prune
+	docker compose -f $(DOCKER_COMPOSE_FILE) down --volumes
 	docker rmi $$(docker images -q)

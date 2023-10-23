@@ -41,9 +41,23 @@ services:
       - mynet
     volumes:
       - wordpress_vol:/var/www/html/wordpress
+      - adminer_vol:/var/www/html/adminer
     ports:
       - "443:443"
     restart: always
+
+  adminer:
+    build: requirements/bonus/adminer/
+    container_name: adminer
+    networks:
+      - mynet
+    expose: 
+      - "8080"
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - adminer_vol:/var/www/html/adminer
 
   ftp-server:
     build: requirements/bonus/ftp-server
@@ -69,12 +83,6 @@ services:
 
 
 volumes:
-  test_vol:
-    driver: local
-    driver_opts:
-      type: none
-      device:
-        ${HOME}/Desktop/inception/
   mysql_vol:
     driver: local
     driver_opts:
@@ -91,6 +99,13 @@ volumes:
         ${HOME}/data/wordpress_path
       o: "bind"
 
+  adminer_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device:
+        ${HOME}/data/adminer_path
+      o: bind
 
 networks:
   mynet:
