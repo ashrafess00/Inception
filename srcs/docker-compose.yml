@@ -100,6 +100,23 @@ services:
     networks:
       - mynet
 
+  cadvisor:
+    build: requirements/bonus/cadvisor
+    image: cadvisor
+    container_name: cadvisor
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - mynet
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/kmsg:/dev/kmsg
+    privileged: true
+
 volumes:
   mysql_vol:
     driver: local
@@ -132,6 +149,7 @@ volumes:
       device:
         ${HOME}/data/portfolio_path
       o: bind
+
 
 networks:
   mynet:

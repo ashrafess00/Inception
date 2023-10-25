@@ -12,3 +12,4 @@ COPY conf/init.sh /init.sh
 
 
 ENTRYPOINT [ "sh", "init.sh" ]
+
