@@ -10,4 +10,4 @@ echo "maxmemory 256mb" >> /etc/redis/redis.conf
 echo "maxmemory-policy allkeys-lru" >> /etc/redis/redis.conf
 
 # Start Redis with the modified configuration
-redis-server /etc/redis/redis.conf
+redis-server --protected-mode no
