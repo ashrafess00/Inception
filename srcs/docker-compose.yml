@@ -1,21 +1,25 @@
-version: "3.8"
+version: '3.8'
 
 services:
   mariadb:
-    build: requirements/mariadb/
+    build:
+      context: requirements/mariadb
+      dockerfile: Dockerfile
+    image: mariadb
+    restart: always
+    volumes:
+      - mysql_vol:/var/lib/mysql
     container_name: mariadb
+    networks:
+      - mynet
     expose:
       - "3306"
     env_file:
       - .env
-    networks:
-      - mynet
-    volumes:
-      - mysql_vol:/var/lib/mysql
-    restart: always
 
   wordpress:
     build: requirements/wordpress/
+    image: wordpress
     depends_on:
       - mariadb
     container_name: wordpress
@@ -32,6 +36,7 @@ services:
 
   nginx:
     build: requirements/nginx/
+    image: nginx
     depends_on:
       - wordpress
     container_name: nginx
@@ -42,12 +47,14 @@ services:
     volumes:
       - wordpress_vol:/var/www/html/wordpress
       - adminer_vol:/var/www/html/adminer
+      - portfolio_vol:/var/www/html/portfolio
     ports:
       - "443:443"
     restart: always
 
   adminer:
     build: requirements/bonus/adminer/
+    image: adminer
     container_name: adminer
     networks:
       - mynet
@@ -61,6 +68,7 @@ services:
 
   ftp-server:
     build: requirements/bonus/ftp-server
+    image: ftp-server
     container_name: ftp-server
     env_file:
       - .env
@@ -70,17 +78,27 @@ services:
       - mynet
     ports:
       - "20:20"
-      # - "21:21"
-      - "21100-21110:21100-21110"
+      - "21:21"
     restart: always
     depends_on:
       - wordpress
 
+  portfolio:
+    build: requirements/bonus/portfolio
+    image: portfolio
+    container_name: portfolio
+    volumes:
+      - portfolio_vol:/var/www/html/portfolio
 
-
-# 172.20.0.2
-  
-
+  redis:
+    build: requirements/bonus/redis
+    image: redis
+    container_name: redis
+    restart: always
+    expose:
+      - "6379"
+    networks:
+      - mynet
 
 volumes:
   mysql_vol:
@@ -105,6 +123,14 @@ volumes:
       type: none
       device:
         ${HOME}/data/adminer_path
+      o: bind
+
+  portfolio_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device:
+        ${HOME}/data/portfolio_path
       o: bind
 
 networks:
