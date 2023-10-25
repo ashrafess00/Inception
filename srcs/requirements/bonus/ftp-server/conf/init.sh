@@ -1,10 +1,13 @@
 #!/bin/sh
 
 
+
 if ! id -u "$FTP_USER" &>/dev/null ;then
     useradd $FTP_USER
     echo $FTP_USER:$FTP_PASSWORD | chpasswd
 fi;
+
+
 usermod -d /var/www/html/wordpress $FTP_USER
 
 mkdir -p /var/www/html/wordpress/ftp
