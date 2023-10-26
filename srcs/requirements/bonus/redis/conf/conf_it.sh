@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Change permissions on the /etc/redis directory
-chmod -R 777 /etc/redis
+chmod -R 755 /etc/redis
 
 sed -i "s|bind 127.0.0.1|#bind 127.0.0.1|g" /etc/redis/redis.conf
 
@@ -9,5 +9,4 @@ sed -i "s|bind 127.0.0.1|#bind 127.0.0.1|g" /etc/redis/redis.conf
 echo "maxmemory 256mb" >> /etc/redis/redis.conf
 echo "maxmemory-policy allkeys-lru" >> /etc/redis/redis.conf
 
-# Start Redis with the modified configuration
 redis-server --protected-mode no
