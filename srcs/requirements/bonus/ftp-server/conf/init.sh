@@ -1,13 +1,13 @@
 #!/bin/sh
 
 
-
+# create the user if is not created yet
 if ! id -u "$FTP_USER" &>/dev/null ;then
     useradd $FTP_USER
     echo $FTP_USER:$FTP_PASSWORD | chpasswd
 fi;
 
-
+# change the home directory of this user to /var.../wordpress
 usermod -d /var/www/html/wordpress $FTP_USER
 
 mkdir -p /var/www/html/wordpress/ftp

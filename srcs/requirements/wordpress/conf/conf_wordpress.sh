@@ -33,7 +33,7 @@ if [ ! -f  /var/www/html/wordpress/wp-config.php ]; then
         ${USER_NAME} \
         ${USER_EMAIL} \
         --user_pass=${USER_PASSWORD} \
-        --role=editor \
+        --role=author \
         --allow-root
         
         wp config set WP_REDIS_HOST redis --allow-root

@@ -3,7 +3,7 @@ SCRIPTS=./srcs/requirements/tools
 
 all:
 	sh $(SCRIPTS)/setup.sh
-	docker compose -f $(DOCKER_COMPOSE_FILE) up --build
+	docker compose -f $(DOCKER_COMPOSE_FILE) up --build -d
 
 up: all
 
