@@ -21,4 +21,5 @@ FLUSH PRIVILEGES;
 EOF
 
 mariadbd --user=root --bootstrap < init.sql
+
 exec "$@"

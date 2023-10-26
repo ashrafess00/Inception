@@ -12,3 +12,4 @@ EXPOSE 6379
 # Set the entry point to run the configuration script
 ENTRYPOINT [ "sh", "conf_it.sh" ]
 
+CMD [ "redis-server", "--protected-mode", "no" ]

@@ -13,3 +13,4 @@ COPY conf/init.sh /init.sh
 
 ENTRYPOINT [ "sh", "init.sh" ]
 
+CMD [ "/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf" ]

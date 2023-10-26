@@ -51,5 +51,6 @@ if [ ! -f  /var/www/html/wordpress/wp-config.php ]; then
 else
     echo "\033[0;31mWordpress is already installed\033[0m"
 fi;
+
 exec "$@"
 

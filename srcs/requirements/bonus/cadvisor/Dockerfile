@@ -9,4 +9,5 @@ RUN wget -O cadvisor https://github.com/google/cadvisor/releases/download/v0.47.
 RUN chmod +x cadvisor
 
 EXPOSE 8080
+
 CMD ["./cadvisor"]

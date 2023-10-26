@@ -91,6 +91,8 @@ services:
     volumes:
       - portfolio_vol:/var/www/html/portfolio
       - nginx_vol:/etc/nginx/conf.d
+    networks:
+      - mynet
 
   redis:
     build: requirements/bonus/redis

@@ -19,6 +19,4 @@ echo "vsftpd test file" | tee /var/www/html/wordpress/ftp/ftp.txt
 
 echo $FTP_USER | tee -a /etc/vsftpd.userlist
 
-/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-
-
+exec "$@"
