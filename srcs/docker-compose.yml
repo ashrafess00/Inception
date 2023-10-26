@@ -48,6 +48,7 @@ services:
       - wordpress_vol:/var/www/html/wordpress
       - adminer_vol:/var/www/html/adminer
       - portfolio_vol:/var/www/html/portfolio
+      - nginx_vol:/etc/nginx/conf.d
     ports:
       - "443:443"
     restart: always
@@ -89,6 +90,7 @@ services:
     container_name: portfolio
     volumes:
       - portfolio_vol:/var/www/html/portfolio
+      - nginx_vol:/etc/nginx/conf.d
 
   redis:
     build: requirements/bonus/redis
@@ -150,6 +152,6 @@ volumes:
         ${HOME}/data/portfolio_path
       o: bind
 
-
+  nginx_vol:
 networks:
   mynet:

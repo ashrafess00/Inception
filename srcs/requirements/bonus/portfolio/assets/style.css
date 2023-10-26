@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: rgb(246, 231, 213);
+    background-color: rgba(246, 231, 213, 0.172);
     font-family: 'Tilt Neon', sans-serif;
 }
 
@@ -22,6 +22,7 @@ body {
     border-radius: 15px;
     padding: 25px;
     text-align: center;
+    box-shadow: 2px 3px 17px black;
 }
 
 
@@ -43,4 +44,10 @@ body {
 
 a:hover {
     top: 5px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
 }
